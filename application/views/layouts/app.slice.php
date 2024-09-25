@@ -22,7 +22,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   @include('layouts.sidebar')
 
   <!-- content -->
-  @yield('content')
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    @yield('content')
+  </div>
+  <!-- /.content-wrapper -->
 
   <footer class="main-footer">
     <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
