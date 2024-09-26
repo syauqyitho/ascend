@@ -54,3 +54,8 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['reservation'] = 'reservation';
+$route['reservation/create'] = 'reservation/create';
+$route['reservation/store'] = 'reservation/store';
+$route['reservation/show/(:num)'] = 'reservation/show/$1';
+$route['reservation/update/(:num)'] = 'reservation/update/$1';
+$route['reservation/delete/(:num)'] = 'reservation/delete/$1';
