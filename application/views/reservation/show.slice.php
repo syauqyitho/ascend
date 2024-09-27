@@ -16,7 +16,7 @@
           <!-- /.card-header -->
           <!-- form start -->
           <div class="card-body">
-            <?= form_open('reservation/update') ?>
+            <?= form_open('reservation/update/'.$reservations['reservation_id']) ?>
               <div class="form-group">
                 <label for="reservation_status">Reservation Status</label>
                 <select class="custom-select rounded-0" id="reservation_status" name="reservation_status">
@@ -63,21 +63,23 @@
               </div>
               <div class="form-group">
                 <label>Arrival</label>
-                  <div class="input-group date" id="arrival" data-target-input="nearest">
+                <input type="datetime-local" class="form-control" id="arrival" name="arrival" value="{{ $reservations['arrival'] }}" placeholder="Enter arrival">
+                  <!-- <div class="input-group date" id="arrival" data-target-input="nearest">
                       <input type="text" class="form-control datetimepicker-input" data-target="#arrival" name="arrival" value="{{ $reservations['arrival'] }}"/>
                       <div class="input-group-append" data-target="#arrival" data-toggle="datetimepicker">
                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                       </div>
-                  </div>
+                  </div> -->
               </div>
               <div class="form-group">
                 <label>Departure</label>
-                  <div class="input-group date" id="departure" data-target-input="nearest">
+                <input type="datetime-local" class="form-control" id="departure" name="departure" value="{{ $reservations['departure'] }}" placeholder="Enter departure">
+                  <!-- <div class="input-group date" id="departure" data-target-input="nearest">
                       <input type="text" class="form-control datetimepicker-input" data-target="#departure" name="departure" value="{{ $reservations['departure'] }}"/>
                       <div class="input-group-append" data-target="#departure" data-toggle="datetimepicker">
                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                       </div>
-                  </div>
+                  </div> -->
               </div>
               <div class="form-group">
                 <label for="child">Child</label>
