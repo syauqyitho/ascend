@@ -37,9 +37,16 @@ $sidebarItems = [
     //     ]
     // ],
     [
-        'name' => 'reservation',
+        'name' => 'Reservation',
         'url' => 'reservation',
-        'icon' => 'fas fa-calendar-plus',
+        'icon' => 'fa fa-calendar-day',
+        // 'active' => 'reservation' == 'reservation' ? true : false
+        'active' => base_url() == 'reservation' ? true : false
+    ],
+    [
+        'name' => 'Room',
+        'url' => 'room',
+        'icon' => 'fa fa-bed',
         // 'active' => 'reservation' == 'reservation' ? true : false
         'active' => base_url() == 'reservation' ? true : false
     ]

@@ -53,9 +53,18 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+# Reservation
 $route['reservation'] = 'reservation';
 $route['reservation/create'] = 'reservation/create';
 $route['reservation/store'] = 'reservation/store';
 $route['reservation/show/(:num)'] = 'reservation/show/$1';
 $route['reservation/update/(:num)'] = 'reservation/update/$1';
 $route['reservation/delete/(:num)'] = 'reservation/delete/$1';
+
+# Room
+$route['room'] = 'room';
+$route['room/create'] = 'room/create';
+$route['room/store'] = 'room/store';
+$route['room/show/(:num)'] = 'room/show/$1';
+$route['room/update/(:num)'] = 'room/update/$1';
+$route['room/delete/(:num)'] = 'room/delete/$1';
