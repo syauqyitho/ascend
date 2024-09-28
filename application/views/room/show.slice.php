@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create Reservation')
+@section('title', 'Detail Reservation')
 
 @section('content')
 <!-- Main content -->
