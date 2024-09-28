@@ -17,7 +17,7 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>Room Id</th>
+                <th>Room Number</th>
                 <th>Room Type</th>
                 <th>Room Status</th>
                 <th>Action</th>
@@ -26,7 +26,7 @@
               <tbody>
               @foreach ($rooms as $room)
                 <tr>
-                  <td>{{ $room->room_id }}</td>
+                  <td>{{ $room->room_number }}</td>
                   <td>{{ $room->room_type }}</td>
                   <td>{{ $room->room_status }}</td>
                   <td>
