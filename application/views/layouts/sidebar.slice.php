@@ -49,7 +49,21 @@ $sidebarItems = [
         'icon' => 'fa fa-bed',
         // 'active' => 'reservation' == 'reservation' ? true : false
         'active' => base_url() == 'reservation' ? true : false
-    ]
+    ],
+    [
+        'name' => 'History',
+        'url' => 'history',
+        'icon' => 'fa fa-history',
+        // 'active' => 'reservation' == 'reservation' ? true : false
+        'active' => base_url() == 'reservation' ? true : false
+    ],
+    // [
+    //     'name' => 'Report',
+    //     'url' => 'report',
+    //     'icon' => 'fa fa-file',
+    //     // 'active' => 'reservation' == 'reservation' ? true : false
+    //     'active' => base_url() == 'reservation' ? true : false
+    // ]
 ];
 // var_dump($sidebarItems);
 @endphp

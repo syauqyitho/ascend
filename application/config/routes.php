@@ -67,4 +67,16 @@ $route['room/create'] = 'room/create';
 $route['room/store'] = 'room/store';
 $route['room/show/(:num)'] = 'room/show/$1';
 $route['room/update/(:num)'] = 'room/update/$1';
-$route['room/delete/(:num)'] = 'room/delete/$1';
+
+# History
+$route['history'] = 'history';
+$route['history/date'] = 'history/date';
+
+# Report
+$route['report'] = 'report';
+$route['report/create'] = 'report/create';
+$route['report/store'] = 'report/store';
+$route['report/show/(:num)'] = 'repot/show/$1';
+$route['report/update/(:num)'] = 'report/update/$1';
+$route['report/delete/(:num)'] = 'report/delete/$1';
+$route['report/delete/(:num)'] = 'repot/delete/$1';
