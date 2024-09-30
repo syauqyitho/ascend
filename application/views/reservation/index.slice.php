@@ -18,22 +18,22 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>Reservation Date</th>
+                <th>Name</th>
                 <th>Room Number</th>
                 <th>Room Type</th>
                 <th>Reservation Status</th>
-                <th>Name</th>
+                <th>Reservation Date</th>
                 <th>Action</th>
               </tr>
               </thead>
               <tbody>
               @foreach ($reservations as $reservation)
                 <tr>
-                  <td>{{ $reservation->created_at }}</td>
+                  <td>{{ $reservation->first_name.' '.$reservation->last_name }}</td>
                   <td>{{ $reservation->room_id }}</td>
                   <td>{{ $reservation->room_type_name }}</td>
                   <td>{{ $reservation->reservation_status_name }}</td>
-                  <td>{{ $reservation->first_name.' '.$reservation->last_name }}</td>
+                  <td>{{ $reservation->created_at }}</td>
                   <td>
                     <a href="<?= base_url('reservation/show/'.$reservation->reservation_id) ?>" class="btn btn-primary">Detail</a>
                   </td>

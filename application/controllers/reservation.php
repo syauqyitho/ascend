@@ -32,8 +32,8 @@ class Reservation extends CI_Controller {
     public function store() {
         $dt = new DateTimeImmutable('now', new DateTimeZone('Asia/Jakarta'));
         $created_at = $dt->format('Y-m-d H:i:s');
-        $available_room = $this->model_room_type->find_available_room(3); 
-        // $available_room = $this->model_room_type->find_available_room($this->input->post('room_type_id')); 
+        // $available_room = $this->model_room_type->find_available_room(3); 
+        $available_room = $this->model_room_type->find_available_room($this->input->post('room_type_id')); 
         
         // var_dump($available_room);
         // exit();
