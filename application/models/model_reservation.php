@@ -7,14 +7,14 @@ class Model_reservation extends CI_Model {
             rsv.reservation_id,
             rsv.first_name,
             rsv.last_name,
-            rsvd.room_id,
-            rsv.created_at,
+            rsv.room_id,
+            rsv.arrival,
+            rsv.departure,
             rsvs.reservation_status_name,
             rt.room_type_name
         ');
         $this->db->from('reservation rsv');
-        $this->db->join('reservation_detail rsvd', 'rsv.reservation_id = rsvd.reservation_id', 'left');
-        $this->db->join('room r', 'rsvd.room_id = r.room_id', 'left');
+        $this->db->join('room r', 'rsv.room_id = r.room_id', 'left');
         $this->db->join('room_type rt', 'r.room_type_id = rt.room_type_id', 'left');
         $this->db->join('reservation_status rsvs', 'rsv.reservation_status_id = rsvs.reservation_status_id', 'left');
         return $this->db->get()->result();
