@@ -11,12 +11,13 @@
         <div class="card">
           <div class="card-header">
             @php
-              echo form_open('history/date/')
+              echo form_open('history')
             @endphp
-              <div class="form-group d-flex col-6">
-                <input type="date" class="form-control" id="start_end" name="start_date" value="{{ isset($start_date) ? $start_date : date('Y-m-d') }}" placeholder="Enter start date" />
-                <input type="date" class="form-control mx-2" id="end_date" name="end_date" value="{{ isset($end_date) ? $end_date : date('Y-m-d') }}" placeholder="Enter end date" />
-                <button type="submit" class="btn btn-primary">Submit</button>
+              <div class="d-flex flex-wrap">
+                <input type="date" class="form-control col-lg-2 m-1" id="start_end" name="start_date" value="{{ isset($start_date) ? $start_date : date('Y-m-d') }}" placeholder="Enter start date" />
+                <input type="date" class="form-control col-lg-2 m-1" id="end_date" name="end_date" value="{{ isset($end_date) ? $end_date : date('Y-m-d') }}" placeholder="Enter end date" />
+                <input type="text" class="form-control col-lg-3 m-1" id="start_end" name="name" value="{{ isset($name) ? $name : '' }}" placeholder="Enter name" />
+                <button type="submit" class="btn btn-primary m-1" name="submit">Submit</button>
               </div>
             </form>
           </div>
