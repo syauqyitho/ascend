@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create Reservation')
+@section('title', 'Detail Reservation')
 
 @section('content')
 <!-- Main content -->
@@ -130,8 +130,8 @@
     });
 
     //Date and time picker
-    $('#arrival').datetimepicker({ icons: { time: 'far fa-clock' } });
-    $('#departure').datetimepicker({ icons: { time: 'far fa-clock' } });
+    // $('#arrival').datetimepicker({ icons: { time: 'far fa-clock' } });
+    // $('#departure').datetimepicker({ icons: { time: 'far fa-clock' } });
 
     //Date range picker
     $('#reservation').daterangepicker()
