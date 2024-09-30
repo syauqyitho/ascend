@@ -26,7 +26,7 @@ class Model_history extends CI_Model {
         return $this->db->get()->result();
     }
     
-    public function filter_by_date($start_date, $end_date) {
+    public function filter_history($start_date, $end_date, $name = null) {
         $this->db->select('
             rsv.reservation_id,
             rsv.first_name,
@@ -44,6 +44,11 @@ class Model_history extends CI_Model {
         $this->db->join('reservation_status rsvs', 'rsv.reservation_status_id = rsvs.reservation_status_id', 'left');
         $this->db->where('date(rsv.departure) >=', $start_date);
         $this->db->where('date(rsv.departure) <=', $end_date);
+        
+        if ($name) {
+            $this->db->where('concat(rsv.first_name, " ", rsv.last_name) like', '%'.$name.'%');
+        }
+        
         return $this->db->get()->result();
     }
 }
