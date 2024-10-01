@@ -27,10 +27,11 @@
               <thead>
               <tr>
                 <th>Name</th>
-                <th>Room Number</th>
-                <th>Room Type</th>
                 <th>Phone Number</th>
+                <th>Arrival</th>
                 <th>Departure</th>
+                <th>Status</th>
+                <th>Type</th>
                 <th>Action</th>
               </tr>
               </thead>
@@ -38,10 +39,11 @@
               @foreach ($reservations as $reservation)
                 <tr>
                   <td>{{ $reservation->first_name.' '.$reservation->last_name }}</td>
-                  <td>{{ $reservation->room_id }}</td>
-                  <td>{{ $reservation->room_type_name }}</td>
                   <td>{{ $reservation->phone_number }}</td>
+                  <td>{{ $reservation->arrival }}</td>
                   <td>{{ $reservation->departure }}</td>
+                  <td><span class="btn btn-sm btn-info">{{ $reservation->reservation_status_name }}</span></td>
+                  <td>{{ $reservation->room_type_name }}</td>
                   <td>
                     <a href="<?= base_url('reservation/show/'.$reservation->reservation_id) ?>" class="btn btn-primary">Detail</a>
                   </td>
@@ -70,6 +72,7 @@
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
+      "searching": false,
     });
   });
 </script>
