@@ -58,34 +58,32 @@
                 <input type="text" class="form-control" id="email" name="email" placeholder="Enter email">
               </div>
               <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
-              </div>
-              <div class="form-group">
-                <label>Arrival</label>
-                  <div class="input-group date" id="arrival" data-target-input="nearest">
-                      <input type="text" class="form-control datetimepicker-input" data-target="#arrival" name="arrival"/>
-                      <div class="input-group-append" data-target="#arrival" data-toggle="datetimepicker">
-                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                      </div>
-                  </div>
-              </div>
-              <div class="form-group">
-                <label>Departure</label>
-                  <div class="input-group date" id="departure" data-target-input="nearest">
-                      <input type="text" class="form-control datetimepicker-input" data-target="#departure" name="departure"/>
-                      <div class="input-group-append" data-target="#departure" data-toggle="datetimepicker">
-                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                      </div>
-                  </div>
-              </div>
-              <div class="form-group">
                 <label for="child">Child</label>
                 <input type="number" class="form-control" id="child" name="child" placeholder="Total Child">
               </div>
               <div class="form-group">
                 <label for="adult">Adult</label>
                 <input type="number" class="form-control" id="adult" name="adult" placeholder="Total Adult">
+              </div>
+              <div class="form-group">
+                <label>Arrival</label>
+                <input type="datetime-local" class="form-control" id="arrival" name="arrival" placeholder="Enter arrival">
+                  <!-- <div class="input-group date" id="arrival" data-target-input="nearest">
+                      <input type="text" class="form-control datetimepicker-input" data-target="#arrival" name="arrival"/>
+                      <div class="input-group-append" data-target="#arrival" data-toggle="datetimepicker">
+                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                      </div>
+                  </div> -->
+              </div>
+              <div class="form-group">
+                <label>Departure</label>
+                <input type="datetime-local" class="form-control" id="departure" name="departure" placeholder="Enter departure">
+                  <!-- <div class="input-group date" id="departure" data-target-input="nearest">
+                      <input type="text" class="form-control datetimepicker-input" data-target="#departure" name="departure"/>
+                      <div class="input-group-append" data-target="#departure" data-toggle="datetimepicker">
+                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                      </div>
+                  </div> -->
               </div>
             <!-- /.card-body -->
             <div class="card-footer">

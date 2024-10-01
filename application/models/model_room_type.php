@@ -8,7 +8,11 @@ class Model_room_type extends CI_Model {
     }
 
     public function find_available_room($id) {
-        $this->db->select('*');
+        $this->db->select('
+            r.room_id,
+            r.room_type_id,
+            r.room_status_id,
+        ');
         $this->db->from('room_type rt');
         $this->db->join('room r', 'rt.room_type_id = r.room_type_id', 'left');
         $this->db->join('room_status rs', 'rs.room_status_id = r.room_status_id', 'left');
