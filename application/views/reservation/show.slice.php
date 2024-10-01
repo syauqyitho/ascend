@@ -58,8 +58,12 @@
                 <input type="text" class="form-control" id="email" name="email" value="{{ $reservations['email'] }}" placeholder="Enter email">
               </div>
               <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" name="address" value="{{ $reservations['address'] }}" placeholder="Enter address">
+                <label for="child">Child</label>
+                <input type="number" class="form-control" id="child" name="child" value="{{ $reservations['child'] }}" placeholder="Total Child">
+              </div>
+              <div class="form-group">
+                <label for="adult">Adult</label>
+                <input type="number" class="form-control" id="adult" name="adult" value="{{ $reservations['adult'] }}" placeholder="Total Adult">
               </div>
               <div class="form-group">
                 <label>Arrival</label>
@@ -82,12 +86,24 @@
                   </div> -->
               </div>
               <div class="form-group">
-                <label for="child">Child</label>
-                <input type="number" class="form-control" id="child" name="child" value="{{ $reservations['child'] }}" placeholder="Total Child">
+                <label>Check In</label>
+                <input type="datetime-local" class="form-control" id="check_in" name="check_in" value="{{ $reservations['check_in'] }}" placeholder="Enter check-in date">
+                  <!-- <div class="input-group date" id="arrival" data-target-input="nearest">
+                      <input type="text" class="form-control datetimepicker-input" data-target="#arrival" name="arrival" value="{{ $reservations['arrival'] }}"/>
+                      <div class="input-group-append" data-target="#arrival" data-toggle="datetimepicker">
+                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                      </div>
+                  </div> -->
               </div>
               <div class="form-group">
-                <label for="adult">Adult</label>
-                <input type="number" class="form-control" id="adult" name="adult" value="{{ $reservations['adult'] }}" placeholder="Total Adult">
+                <label>Check Out</label>
+                <input type="datetime-local" class="form-control" id="check_out" name="check_out" value="{{ $reservations['check_out'] }}" placeholder="Enter check-out date">
+                  <!-- <div class="input-group date" id="departure" data-target-input="nearest">
+                      <input type="text" class="form-control datetimepicker-input" data-target="#departure" name="departure" value="{{ $reservations['departure'] }}"/>
+                      <div class="input-group-append" data-target="#departure" data-toggle="datetimepicker">
+                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                      </div>
+                  </div> -->
               </div>
             <!-- /.card-body -->
             <div class="card-footer">

@@ -7,14 +7,14 @@ class Model_reservation extends CI_Model {
             rsv.reservation_id,
             rsv.first_name,
             rsv.last_name,
-            rsvd.room_id,
-            rsv.created_at,
+            rsv.phone_number,
+            rsv.arrival,
+            rsv.departure,
             rsvs.reservation_status_name,
             rt.room_type_name
         ');
         $this->db->from('reservation rsv');
-        $this->db->join('reservation_detail rsvd', 'rsv.reservation_id = rsvd.reservation_id', 'left');
-        $this->db->join('room r', 'rsvd.room_id = r.room_id', 'left');
+        $this->db->join('room r', 'rsv.room_id = r.room_id', 'left');
         $this->db->join('room_type rt', 'r.room_type_id = rt.room_type_id', 'left');
         $this->db->join('reservation_status rsvs', 'rsv.reservation_status_id = rsvs.reservation_status_id', 'left');
         return $this->db->get()->result();
@@ -29,15 +29,15 @@ class Model_reservation extends CI_Model {
         $data_reservation = array(
             'reservation_status_id' => $data['reservation_status_id'],
             'reservation_type_id' => $data['reservation_type_id'],
+            'room_id' => $data['room_id'],
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'phone_number' => $data['phone_number'],
             'email' => $data['email'],
-            'address' => $data['address'],
-            'arrival' => $data['arrival'],
-            'departure' => $data['departure'],
             'child' => $data['child'],
             'adult' => $data['adult'],
+            'arrival' => $data['arrival'],
+            'departure' => $data['departure'],
             'created_at' => $data['created_at']
         );
 
@@ -51,25 +51,15 @@ class Model_reservation extends CI_Model {
             // 2. Insert Reservation 
             $this->db->insert('reservation', $data_reservation);
             
-            // Get reservation_id
-            $reservation_id = $this->db->insert_id();
-            $data_reservation_detail = array(
-                'reservation_id' => $reservation_id,
-                'room_type_id' => $data['room_type_id'],
-                'room_id' => $data['room_id']
-            );
-            
-            $this->db->insert('reservation_detail', $data_reservation_detail);
-
             // 3. Update Room Status to 'Reserved'
             $reserved_status_id = 3/* ID for 'Reserved' status */;
             $this->db->set('room_status_id', $reserved_status_id);
-            $this->db->where('room_id', $data_reservation_detail['room_id']);
+            $this->db->where('room_id', $data['room_id']);
             $this->db->update('room');
 
             // 4. Decrement Room Type Availability 
             $this->db->set('available_room', 'available_room - 1', FALSE);
-            $this->db->where('room_type_id', $data_reservation_detail['room_type_id']);
+            $this->db->where('room_type_id', $data['room_type_id']);
             $this->db->update('room_type');
 
             $this->db->trans_complete();
@@ -78,53 +68,42 @@ class Model_reservation extends CI_Model {
         } catch (Exception $e) {
             $this->db->trans_rollback();
             log_message('error', "Reservation creation failed: " . $e->getMessage());
-            return false; 
+            return $e->getMessage(); 
         }
     }
 
     public function show($id) {
         $reservation = $this->db->get_where('reservation', array('reservation_id' => $id))->row();
-        // Find reservatoin_detail
-        $reservation_detail = $this->db->get_where('reservation_detail', array('reservation_id' => $id))->row();
+        // Find room_type of room_id
+        $room_type = $this->db->get_where('room', array('room_id' => $reservation->room_id))->row();
 
         return $data = array(
             'reservation_id' => $reservation->reservation_id,
             'reservation_status_id' => $reservation->reservation_status_id,
             'reservation_type_id' => $reservation->reservation_type_id,
-            'room_type_id' => $reservation_detail->room_type_id,
+            'room_type_id' => $room_type->room_type_id,
             'first_name' => $reservation->first_name,
             'last_name' => $reservation->last_name,
             'phone_number' => $reservation->phone_number,
             'email' => $reservation->email,
-            'address' => $reservation->address,
+            'child' => $reservation->child,
+            'adult' => $reservation->adult,
             'arrival' => $reservation->arrival,
             'departure' => $reservation->departure,
-            'child' => $reservation->child,
-            'adult' => $reservation->adult
+            'check_out' => $reservation->check_in,
+            'check_in' => $reservation->check_out
         );
     }
+
     public function update($id, $data) {
         $this->db->trans_start();
         
-        $data_reservation = array(
-            'reservation_status_id' => $data['reservation_status_id'],
-            'reservation_type_id' => $data['reservation_type_id'],
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'phone_number' => $data['phone_number'],
-            'email' => $data['email'],
-            'address' => $data['address'],
-            'arrival' => $data['arrival'],
-            'departure' => $data['departure'],
-            'child' => $data['child'],
-            'adult' => $data['adult']
-        );
-
-        $this->db->where('reservation_id', $id);
-        $this->db->update('reservation', $data_reservation);
-        
         // Check room_type availability
-        $this->db->select('*');
+        $this->db->select('
+            r.room_id,
+            r.room_type_id,
+            r.room_status_id
+        ');
         $this->db->from('room_type rt');
         $this->db->join('room r', 'rt.room_type_id = r.room_type_id', 'left');
         $this->db->join('room_status rs', 'r.room_status_id = rs.room_status_id', 'left');
@@ -133,48 +112,82 @@ class Model_reservation extends CI_Model {
         $is_available = $this->db->get()->row();
 
         // Check if room_type is not same
-        $room_type = $this->db->get_where('reservation_detail', array('reservation_id' => $id))->row_array();
+        $this->db->select('
+            r.room_id,
+            r.room_type_id,
+            r.room_status_id
+        ');
+        $this->db->from('room r');
+        $this->db->join('reservation rsv', 'r.room_id = rsv.room_id', 'left');
+        $this->db->where('rsv.reservation_id', $id);
+        $room = $this->db->get()->row();
         
-        if ($data['room_type_id'] != $room_type['room_type_id']) {
-            // $data = '2';
-            $data_reservation_detail = array(
-                'room_type_id' => $is_available->room_type_id,
-                'room_id' => $is_available->room_id
-            );
-            
-            // Update to new room_type           
-            $this->db->where('reservation_id', $id);
-            $this->db->update('reservation_detail', $data_reservation_detail);
 
-            // Update reservation_detail
-            $reservation_detail = $this->db->get_where('reservation_detail', array('reservation_id' => $id))->row_array();
-            $this->db->where('reservation_detail_id', $reservation_detail['reservation_detail_id']);
-            $this->db->update('reservation_detail', $data_reservation_detail);
+        // $room_type = $this->db->get_where('room`', array('reservation_id' => $id))->row_array();
+        
+        if ($data['room_type_id'] != $room->room_type_id) {
+            // $data = '2';
+            $data_reservation = array(
+                'reservation_status_id' => $data['reservation_status_id'],
+                'reservation_type_id' => $data['reservation_type_id'],
+                'room_id' => $is_available->room_id,
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'phone_number' => $data['phone_number'],
+                'email' => $data['email'],
+                'child' => $data['child'],
+                'adult' => $data['adult'],
+                'arrival' => $data['arrival'],
+                'departure' => $data['departure'],
+                'check_in' => $data['check_in'],
+                'check_out' => $data['check_out']
+            );
+
+            $this->db->where('reservation_id', $id);
+            $this->db->update('reservation', $data_reservation);
             
             // Update Room Status to 'Reserved'
             $reserved_status_id = 3/* ID for 'Reserved' status */;
             $this->db->set('room_status_id', $reserved_status_id);
-            $this->db->where('room_id', $data_reservation_detail['room_id']);
+            $this->db->where('room_id', $is_available->room_id);
             $this->db->update('room');
 
             // Decrement Room Type Availability 
             $this->db->set('available_room', 'available_room - 1', FALSE);
-            $this->db->where('room_type_id', $data_reservation_detail['room_type_id']);
+            $this->db->where('room_type_id', $is_available->room_type_id);
             $this->db->update('room_type');
 
             // Set Room Status to 'available'
-            $available_status_id = 1/* ID for 'Available' status */;
-            $this->db->set('room_status_id', $reserved_status_id);
-            $this->db->where('room_id', $room_type['room_id']);
+            $clean_status_id = 5/* ID for 'Available' status */;
+            $this->db->set('room_status_id', $clean_status_id);
+            $this->db->where('room_id', $room->room_id);
             $this->db->update('room');
 
             // Decrement Room Type Availability 
             $this->db->set('available_room', 'available_room + 1', FALSE);
-            $this->db->where('room_type_id', $room_type['room_type_id']);
+            $this->db->where('room_type_id', $room->room_type_id);
             $this->db->update('room_type');
-        }/*  else {
+        } else {
             // $data = '3';
-        } */
+            $data_reservation = array(
+                'reservation_status_id' => $data['reservation_status_id'],
+                'reservation_type_id' => $data['reservation_type_id'],
+                'room_id' => $room->room_id,
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'phone_number' => $data['phone_number'],
+                'email' => $data['email'],
+                'child' => $data['child'],
+                'adult' => $data['adult'],
+                'arrival' => $data['arrival'],
+                'departure' => $data['departure'],
+                'check_in' => $data['check_in'],
+                'check_out' => $data['check_out'],
+            );
+
+            $this->db->where('reservation_id', $id);
+            $this->db->update('reservation', $data_reservation);
+        }
         
         $this->db->trans_complete();
     }
