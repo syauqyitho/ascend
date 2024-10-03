@@ -40,30 +40,22 @@ $sidebarItems = [
         'name' => 'Reservation',
         'url' => 'reservation',
         'icon' => 'fa fa-calendar-day',
-        // 'active' => 'reservation' == 'reservation' ? true : false
-        'active' => base_url() == 'reservation' ? true : false
     ],
     [
         'name' => 'Room',
         'url' => 'room',
         'icon' => 'fa fa-bed',
-        // 'active' => 'reservation' == 'reservation' ? true : false
-        'active' => base_url() == 'reservation' ? true : false
     ],
     [
         'name' => 'History',
         'url' => 'history',
         'icon' => 'fa fa-history',
-        // 'active' => 'reservation' == 'reservation' ? true : false
-        'active' => base_url() == 'reservation' ? true : false
     ],
-    // [
-    //     'name' => 'Report',
-    //     'url' => 'report',
-    //     'icon' => 'fa fa-file',
-    //     // 'active' => 'reservation' == 'reservation' ? true : false
-    //     'active' => base_url() == 'reservation' ? true : false
-    // ]
+    [
+        'name' => 'Report',
+        'url' => 'report',
+        'icon' => 'fa fa-file',
+    ]
 ];
 // var_dump($sidebarItems);
 @endphp
@@ -83,7 +75,7 @@ $sidebarItems = [
       <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
 
       @foreach ($sidebarItems as $item)
-      <li class="nav-item <?= isset($item['submenu']) ? '' : 'no-submenu'; $item['active'] ? 'active' : '' ?>">
+      <li class="nav-item <?= isset($item['submenu']) ? '' : 'no-submenu' ?>">
         <a href="<?= base_url(isset($item['url']) ? $item['url'] : '#') ?>" class="nav-link">
           <i class="nav-icon <?= $item['icon'] ?>"></i>
           <p>
@@ -103,7 +95,7 @@ $sidebarItems = [
         @if (isset($item['submenu']))
         <ul class="nav nav-treeview">
             @foreach ($item['submenu'] as $subitem)
-            <li class="nav-item <?= $subitem['active'] ? 'active' : '' ?>">
+            <li class="nav-item">
             <a href="<?= base_url($subitem['url']) ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p><?= $subitem['name'] ?></p>
